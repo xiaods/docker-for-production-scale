@@ -4,4 +4,5 @@
 * [0. 前言](../0.-qian-yan.md)
 * [1. 容器核心技术预览](../1.-rong-qi-he-xin-ji-shu-yu-lan.md)
 * [2. 玩转Docker命令行](../wan-zhuan-docker-ming-ling-hang.md)
+* [3. Java应用容器化](../3.-java-ying-yong-rong-qi-hua.md)
 

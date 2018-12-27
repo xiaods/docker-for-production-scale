@@ -1,18 +1,18 @@
 # 2. 玩转Docker命令行
 
-法国人所罗门\(**Solomon Hykes**\)是在PyCon 2013大会上第一次向大众展示Docker工具。新颖的应用容器启动概念快速在DevOps圈中获得普遍的好感。随着云计算和DevOps的推波助澜，大量的开发实践也回馈到Docker这个开源项目中，迅速让这个项目成为云计算领域最火热的开源项目。在经历了5年的磨砺之后，Docker工具链已经成为云计算工具链中最强大的底层系统工具之一，中国容器用户在整个容器演化历程中积累和总结了很多经验，希望通过本章的讲解让读者能融汇贯通Docker技术并应用在自己场景下的生产实践中。
+法国人所罗门\(**Solomon Hykes**\)是在PyCon 2013大会上第一次向开发者大众展示Docker工具的。新颖的应用容器启动概念快速在DevOps圈中获得关注并开始流行起来。随着云计算和DevOps技术的推波助澜，大量的容器应用实践也快速回馈到了Docker这个开源项目中，迅速让Docker成为云计算领域中最火热的一个开源项目。在经历了5年的磨砺之后，Docker工具链已经成为云计算工具链中最强大的底层系统工具之一，中国容器用户在整个容器演化历程中积累和总结了很多经验，希望通过本章的讲解让读者能融汇贯通Docker工具链并能应用在自己场景下的生产实践中。
 
 
 
-## 1. 安装部署Docker
+## 1. 安装部署Docker引擎
 
-Docker工具链一直在不断的迭代，很多更新随着时间的推移，让你都搞不清楚到底有哪些有用的指令需要熟悉。所以，Docker推出了适合开发者的桌面版本安装包，支持MacOS和Windows。
+Docker工具链一直在不断的迭代，很多更新随着时间的推移，让你都搞不清楚到底有哪些有用的命令需要熟悉。所以，Docker推出了适合开发者使用的桌面版本安装包，支持MacOS和Windows两大主流操作系统平台。
 
 ![MacOS&#x7248;&#x672C;docker&#x914D;&#x7F6E;&#x622A;&#x56FE;](.gitbook/assets/ping-mu-kuai-zhao-20181129-xia-wu-4.35.26.png)
 
-遗憾的事情是Linux系统、MacOS、Windows系统并不是一家出来的，真的想做到行为一致是不太可能的。所以，一般我们选择的标准都是以服务器上的Docker版本为准来学习掌握Docker命令行知识。显而易见，服务器上的操作系统大多是Linux系统，尤其是CentOS、Ubuntu为最多，所以Docker的命令行熟悉范畴也是以这个为标准的。
+遗憾的事情是Linux、MacOS、Windows系统并不是一家公司出来的，真的想做到行为一致是不太可能的。所以，一般我们选择的标准都是以服务器上的Docker版本为准来学习掌握Docker命令行知识。显而易见，服务器上的操作系统大多是Linux系统，尤其是CentOS、Ubuntu版本为最多，所以熟悉掌握Docker命令行参数和方法是容器用户必须要了解的。
 
-服务器主流仓库都有Docker仓库的副本，很多读者都会以为服务器会及时更新。但是事实上，由于Docker版本更新的过于频繁，所以服务器上默认的安装仓库都是过时的软件，不推荐使用。为了安装最新的Docker，就可以配置Docker官方的仓库地址，然后在下载即可。这里举个例子就是在Ubuntu下安装Docker的步骤：
+首先，我们要做的事情就是安装一份正式版本的Docker引擎。由于开源Docker版本每3个月一次更新，服务器上Linux操作系统自带的Docker版本一般都是过时的软件，不推荐使用。为了安装最新版本的Docker，需要配置Docker官方的仓库地址，然后执行安装命令即可。这里的范例是在Ubuntu系统下安装Docker的步骤，请仔细查看：
 
 ```bash
 $ sudo apt-get remove docker docker-engine docker.io
@@ -38,7 +38,9 @@ $ sudo apt-get install docker-ce
 $ sudo docker run hello-world
 ```
 
-因为Docker更新频繁，Docker官方的安装文档是最佳的参考书，可以在第一时间获得对应平台的安装步骤。[https://docs.docker.com/install/linux/docker-ce/ubuntu/](https://docs.docker.com/install/linux/docker-ce/ubuntu/#upgrade-docker-ce) 就是Ubuntu安装手册的地址。
+{% hint style="info" %}
+由于Docker社区版本引擎更新频繁，Docker官方的安装文档是最佳的参考书，可以在第一时间查阅对应平台系统的安装步骤。例如[https://docs.docker.com/install/linux/docker-ce/ubuntu/](https://docs.docker.com/install/linux/docker-ce/ubuntu/#upgrade-docker-ce) 就是Ubuntu安装手册的地址。
+{% endhint %}
 
 ## 2  Docker命令行解析
 
