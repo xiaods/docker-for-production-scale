@@ -956,6 +956,19 @@ sudo docker run fedora cat /proc/self/loginuid
 4294967295
 ```
 
+从示例中我们可以看到Podman和系统进程的行为一致，更安全可控。
+
+![Pod&#x6574;&#x4F53;&#x67B6;&#x6784;](.gitbook/assets/podman-pod-architecture.png)
+
+Podman采用经典的进程模型fork/exec启动容器，容器都是Podman进程的子孙。而Docker采用client/server进程模型运行容器。Docker采用**docker**命令发出指令给Docker后台进程，然后Docker后台程序通过stdin/stdout通道把容器运行信息返回给docker命令行。因为Docker后台进程是init系统的子孙进程，所以才显示的是长串的id字符串：4294967295。可以用如下命令验证：
+
+```bash
+cat /proc/1/loginuid
+4294967295
+```
+
+
+
 ## 5. 总结
 
 通过以上对Docker命令行的详细解释，读者可以强化对Docker命令的熟悉。尽管本章详细介绍了Docker方方面面的命令行参数，但仍然是重点参数的介绍。考虑到Docker的版本迭代快，很多社区实践很快就进入到新版本的参数列表中，为了确保参数使用正确，请随时参考Docker官方文档获得最全面的解释定义。
