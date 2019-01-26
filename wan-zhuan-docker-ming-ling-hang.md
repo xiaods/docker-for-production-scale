@@ -1,18 +1,18 @@
-# 2. 玩转Docker命令行
+# 2. 玩转容器工具命令行
 
-法国人所罗门\(**Solomon Hykes**\)是在PyCon 2013大会上第一次向开发者大众展示Docker工具的。新颖的应用容器启动概念快速在DevOps圈中获得关注并开始流行起来。随着云计算和DevOps技术的推波助澜，大量的容器应用实践也快速回馈到了Docker这个开源项目中，迅速让Docker成为云计算领域中最火热的一个开源项目。在经历了5年的磨砺之后，Docker工具链已经成为云计算工具链中最强大的底层系统工具之一，中国容器用户在整个容器演化历程中积累和总结了很多经验，希望通过本章的讲解让读者能融汇贯通Docker工具链并能应用在自己场景下的生产实践中。
+本章将给重点介绍容器命令行的概况。法国人所罗门\(**Solomon Hykes**\)是在PyCon 2013大会上第一次向开发者大众展示Docker工具的。新颖的应用容器启动概念快速在DevOps圈中获得关注并开始流行起来。随着云计算和DevOps技术的推波助澜，大量的容器应用实践也快速回馈到了Docker这个开源项目中，迅速让Docker成为云计算领域中最火热的一个开源项目。在经历了5年的磨砺之后，Docker工具链已经成为云计算工具链中最强大的底层系统工具之一，中国容器用户在整个容器演化历程中积累和总结了很多经验，读者通过本章的讲解可以达到融汇贯通Docker工具链并能应用在自己场景下的生产实践中。
 
+随着容器技术的理解的深入，Docker工具安全性的潜在问题一直没有得到完美的解决。开源领域的先锋企业红帽带领社区推出了更安全的容器工具：Podman。在架构设计上采用fork/exec架构来取代Docker的client/server架构，这样的设计可以更安全的使用非root用户运行容器，容器运行起来后权限授权更精确合理，让容器里进程安全问题得到彻底解决。并且Podman在设计上就是要无缝替换Docker工具，所以它还能更好的支持OCI标准镜像和Pod容器的运行。在本章中我会通过实际的例子帮助读者理解和上手Podman。
 
+## 1. 安装Docker命令行
 
-## 1. 安装Docker引擎
-
-Docker工具链一直在不断的迭代，很多更新随着时间的推移，让你都搞不清楚到底有哪些有用的命令需要熟悉。所以，Docker推出了适合开发者使用的桌面版本安装包，支持MacOS和Windows两大主流操作系统平台。
+当前Docker社区版本每个季度都会发布一个重要版本，工具的命令参数随着时间的推移常常让读者都搞不清楚到底有多少命令需要熟悉。所以，Docker推出了适合开发者使用的桌面版本安装包，支持MacOS和Windows两大主流操作系统平台，让用户可以随时接触Docker命令行工具的变化，从而达到教育用户的目的。
 
 ![MacOS&#x7248;&#x672C;docker&#x914D;&#x7F6E;&#x622A;&#x56FE;](.gitbook/assets/ping-mu-kuai-zhao-20181129-xia-wu-4.35.26.png)
 
-遗憾的事情是Linux、MacOS、Windows系统并不是一家公司出来的，真的想做到行为一致是不太可能的。所以，一般我们选择的标准都是以服务器上的Docker版本为准来学习掌握Docker命令行知识。显而易见，服务器上的操作系统大多是Linux系统，尤其是CentOS、Ubuntu版本为最多，所以熟悉掌握Docker命令行参数和方法是容器用户必须要了解的。
+遗憾的事情是操作系统Linux、MacOS、Windows系统并不是一家公司发布的，Docker作为跨平台的系统工具想做到行为一致是异常艰难的事情。为了熟悉掌握Docker命令行参数和方法，通常选择的基准环境为Linux系统上的Docker工具。作为普通开发者，桌面版本的Docker工具也非常重要，Docker公司会把很多实验性的特性发布到桌面版本中，通过开发者的使用反馈来稳定容器特性，这是社区迭代开发中很流行的协作模式，让Docker工具在开发者社区得到广泛的普及。
 
-首先，我们要做的事情就是安装一份正式版本的Docker引擎。由于开源Docker版本每3个月一次更新，服务器上Linux操作系统自带的Docker版本一般都是过时的软件，不推荐使用。为了安装最新版本的Docker，需要配置Docker官方的仓库地址，然后执行安装命令即可。这里的范例是在Ubuntu系统下安装Docker的步骤，请仔细查看：
+接下来我们要做的事情就是安装一份正式版本的Docker引擎。由于开源Docker版本每个季度发布一个重要更新版本，服务器上Linux操作系统自带的Docker工具一般都是过时的软件，不推荐使用。为了安装最新版本的Docker，需要配置Docker官方的仓库地址，然后执行安装命令即可。这里的范例是在Ubuntu系统下安装Docker的步骤，请仔细查看：
 
 ```bash
 $ sudo apt-get remove docker docker-engine docker.io
@@ -42,9 +42,9 @@ $ sudo docker run hello-world
 由于Docker社区版本引擎更新频繁，Docker官方的安装文档是最佳的参考书，可以在第一时间查阅对应平台系统的安装步骤。例如[https://docs.docker.com/install/linux/docker-ce/ubuntu/](https://docs.docker.com/install/linux/docker-ce/ubuntu/#upgrade-docker-ce) 就是Ubuntu安装手册的地址。
 {% endhint %}
 
-## 2  Docker命令行解析
+## 2  解析Docker命令行
 
-Docker命令行命令繁多，加上Docker技术的不断迭代，从一开始我们就需要先熟悉这些命令这样才能慢慢体会Docker的价值，所以先让我们一起开始一次真正的命令行学习之旅。首先，Docker的命令清单可以通过运行 _docker_ ，或者 _docker help_ 命令得到：
+近些年容器技术变化巨大，熟悉Docker命令行工具的参数可以快速加深对容器技术的理解，所以先让我们一起开始一次真正的命令行学习之旅。首先，Docker的命令清单可以通过运行 **docker** ，或者 **docker help** 命令得到：
 
 ```bash
 $ docker help                                                                                                                                                                     
@@ -129,18 +129,46 @@ Run 'docker COMMAND --help' for more information on a command.
 
 ```
 
-在Docker容器技术不断演化的过程中，Docker的子命令已经达到41个之多，其中核心子命令\(例如：run\)还会有复杂的参数配置。笔者通过结合功能和应用场景方面的考虑，把命令行划分为4个部分，方便我们快速概览Docker命令行的组成结构：
+在Docker容器技术不断演化的过程中，Docker的子命令已经达到41个之多，其中核心子命令\(例如：run\)还会有复杂的参数配置。笔者通过划分功能和应用场景方面的考虑，把命令行参数划分为4个部分，方便读者快速浏览Docker命令行的组成结构：
 
-
-
-| 功能划分 | 命令 |
-| :--- | :--- |
-| 环境信息相关 | 1. info 2. version |
-| 系统运维相关 | 1. attach 2. build 3. commit 4. cp 5. diff 6. images 7. export/ import / save / load 8. inspect 9. kill 10. port 11. pause / unpause 12. ps 13. rm 14. rmi 15. run 16. start / stop / restart 17. tag 18. top 19.wait 20. rename 21.stats 22. update 23. exec 24.deploy 25.create |
-| 日志信息相关 | 1. events 2. history 3. logs |
-| Docker Hub服务相关 | 1. login/ logout 2. pull / push 3. search |
-
-### **2.1 参数约定**
+<table>
+  <thead>
+    <tr>
+      <th style="text-align:center">功能划分</th>
+      <th style="text-align:left">命令</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align:center">环境信息相关（2）</td>
+      <td style="text-align:left">1. info 2. version</td>
+    </tr>
+    <tr>
+      <td style="text-align:center">
+        <p>系统运维相关</p>
+        <p>（25）</p>
+      </td>
+      <td style="text-align:left">1. attach 2. build 3. commit 4. cp 5. diff 6. images 7. export/ import
+        / save / load 8. inspect 9. kill 10. port 11. pause / unpause 12. ps 13.
+        rm 14. rmi 15. run 16. start / stop / restart 17. tag 18. top 19.wait 20.
+        rename 21.stats 22. update 23. exec 24.deploy 25.create</td>
+    </tr>
+    <tr>
+      <td style="text-align:center">
+        <p>日志信息相关</p>
+        <p>（3）</p>
+      </td>
+      <td style="text-align:left">1. events 2. history 3. logs</td>
+    </tr>
+    <tr>
+      <td style="text-align:center">
+        <p>Docker 公有镜像仓库服务相关</p>
+        <p>（3）</p>
+      </td>
+      <td style="text-align:left">1. login/ logout 2. pull / push 3. search</td>
+    </tr>
+  </tbody>
+</table>### **2.1 参数约定**
 
 单个字符的参数可以放在一起组合配置，例如
 
@@ -319,7 +347,7 @@ Docker后台进程参数清单如下表：
 | --userns-remap string | 用户命令空间的用户、用户组配置 |
 | -v, --version | 版本 |
 
-## 3. Docker命令行探秘
+## 3. 探秘Docker命令行
 
 ### **3.1 环境信息相关**
 
@@ -876,7 +904,11 @@ docker search TERM
 
 通过关键字搜索分享的Image。
 
-## 4. 总结
+## 4. 更安全的命令行Podman
+
+
+
+## 5. 总结
 
 通过以上对Docker命令行的详细解释，读者可以强化对Docker命令的熟悉。尽管本章详细介绍了Docker方方面面的命令行参数，但仍然是重点参数的介绍。考虑到Docker的版本迭代快，很多社区实践很快就进入到新版本的参数列表中，为了确保参数使用正确，请随时参考Docker官方文档获得最全面的解释定义。
 
