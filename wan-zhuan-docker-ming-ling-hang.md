@@ -926,7 +926,35 @@ euid=root suid=root fsuid=root egid=root sgid=root fsgid=root tty=pts1 ses=3 com
 exe=/usr/bin/touch subj=unconfined_u:unconfined_r:unconfined_t:s0-s0:c0.c1023 key=(null)
 ```
 
+audit审计的信息很多，其中**auid=dwalsh**代表修改此/etc/shadow文件的进程所有者是**dwalsh**。Linux Kernel在用户登录的同时，会在系统文件**/proc/self/loginuid**中记录**loginuid**，也就是用户登录ID。示例如下：
 
+```text
+$ cat /proc/self/loginuid
+3267
+```
+
+即使切换成root，系统仍然知道还是**dwalsh**这个用户在修改文件。
+
+```text
+$ sudo cat /proc/self/loginuid
+3267
+```
+
+注意每一个进程从最初的登录进程分叉出来，都会继承loginuid, 所以系统知道dwalsh这个用户修改的文件。
+
+接下来，如果是使用Podman或者Docker，loginuid还会一样吗？
+
+```bash
+sudo podman run fedora cat /proc/self/loginuid
+3267
+```
+
+而Docker执行结果如下：
+
+```bash
+sudo docker run fedora cat /proc/self/loginuid
+4294967295
+```
 
 ## 5. 总结
 
