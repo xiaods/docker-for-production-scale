@@ -906,6 +906,26 @@ docker search TERM
 
 ## 4. 更安全的命令行Podman
 
+为了安全的运行容器，容器社区在红帽的推动下发布了更安全的容器工具集合：Podman、runc、systemd、Buildah、skopeo。Podman的目标就是无缝替换Docker，并且更安全。为了体验容器的安全问题，这里需要先了解下Linux Kernel有一个系统工具audit，可以实时监控系统上的安全事件，并把日志保存在日志audit.log中。例如，为了监测系统文件/etc/shadow是否有修改的情况，可以执行以下命令：
+
+```bash
+# auditctl -w /etc/shadow
+```
+
+然后故意的修改系统文件/etc/shadow，并同时查看audit.log如下：
+
+```bash
+# touch /etc/shadow
+# ausearch -f /etc/shadow -i -ts recent
+
+type=PROCTITLE msg=audit(10/10/2018 09:46:03.042:4108) : proctitle=touch /etc/shadow
+type=SYSCALL msg=audit(10/10/2018 09:46:03.042:4108) : arch=x86_64 syscall=openat
+success=yes exit=3 a0=0xffffff9c a1=0x7ffdb17f6704 a2=O_WRONLY|O_CREAT|O_NOCTTY|
+O_NONBLOCK a3=0x1b6 items=2 ppid=2712 pid=3727 auid=dwalsh uid=root gid=root
+euid=root suid=root fsuid=root egid=root sgid=root fsgid=root tty=pts1 ses=3 comm=touch
+exe=/usr/bin/touch subj=unconfined_u:unconfined_r:unconfined_t:s0-s0:c0.c1023 key=(null)
+```
+
 
 
 ## 5. 总结
