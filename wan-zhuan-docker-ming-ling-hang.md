@@ -134,19 +134,20 @@ Run 'docker COMMAND --help' for more information on a command.
 <table>
   <thead>
     <tr>
-      <th style="text-align:center">功能划分</th>
-      <th style="text-align:left">命令</th>
+      <th style="text-align:center">&#x529F;&#x80FD;&#x5212;&#x5206;</th>
+      <th style="text-align:left">&#x547D;&#x4EE4;</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td style="text-align:center">环境信息相关（2）</td>
-      <td style="text-align:left">1. info 2. version</td>
+      <td style="text-align:center">&#x73AF;&#x5883;&#x4FE1;&#x606F;&#x76F8;&#x5173;&#xFF08;2&#xFF09;</td>
+      <td
+      style="text-align:left">1. info 2. version</td>
     </tr>
     <tr>
       <td style="text-align:center">
-        <p>系统运维相关</p>
-        <p>（25）</p>
+        <p>&#x7CFB;&#x7EDF;&#x8FD0;&#x7EF4;&#x76F8;&#x5173;</p>
+        <p>&#xFF08;25&#xFF09;</p>
       </td>
       <td style="text-align:left">1. attach 2. build 3. commit 4. cp 5. diff 6. images 7. export/ import
         / save / load 8. inspect 9. kill 10. port 11. pause / unpause 12. ps 13.
@@ -155,15 +156,15 @@ Run 'docker COMMAND --help' for more information on a command.
     </tr>
     <tr>
       <td style="text-align:center">
-        <p>日志信息相关</p>
-        <p>（3）</p>
+        <p>&#x65E5;&#x5FD7;&#x4FE1;&#x606F;&#x76F8;&#x5173;</p>
+        <p>&#xFF08;3&#xFF09;</p>
       </td>
       <td style="text-align:left">1. events 2. history 3. logs</td>
     </tr>
     <tr>
       <td style="text-align:center">
-        <p>Docker 公有镜像仓库服务相关</p>
-        <p>（3）</p>
+        <p>Docker &#x516C;&#x6709;&#x955C;&#x50CF;&#x4ED3;&#x5E93;&#x670D;&#x52A1;&#x76F8;&#x5173;</p>
+        <p>&#xFF08;3&#xFF09;</p>
       </td>
       <td style="text-align:left">1. login/ logout 2. pull / push 3. search</td>
     </tr>
