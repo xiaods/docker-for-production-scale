@@ -1,10 +1,16 @@
-# 2. 玩转容器工具命令行
+---
+description: 'Docker, LXD, RKT, PodMan, Cri-O ，总有一款适合你'
+---
+
+# 第2章  玩转容器引擎
 
 本章将给重点介绍容器命令行的概况。法国人所罗门\(**Solomon Hykes**\)是在PyCon 2013大会上第一次向开发者大众展示Docker工具的。新颖的应用容器启动概念快速在DevOps圈中获得关注并开始流行起来。随着云计算和DevOps技术的推波助澜，大量的容器应用实践也快速回馈到了Docker这个开源项目中，迅速让Docker成为云计算领域中最火热的一个开源项目。在经历了5年的磨砺之后，Docker工具链已经成为云计算工具链中最强大的底层系统工具之一，中国容器用户在整个容器演化历程中积累和总结了很多经验，读者通过本章的讲解可以达到融汇贯通Docker工具链并能应用在自己场景下的生产实践中。
 
 随着容器技术的理解的深入，Docker工具安全性的潜在问题一直没有得到完美的解决。开源领域的先锋企业红帽带领社区推出了更安全的容器工具：Podman。在架构设计上采用fork/exec架构来取代Docker的client/server架构，这样的设计可以更安全的使用非root用户运行容器，容器运行起来后权限授权更精确合理，让容器里进程安全问题得到彻底解决。并且Podman在设计上就是要无缝替换Docker工具，所以它还能更好的支持OCI标准镜像和Pod容器的运行。在本章中我会通过实际的例子帮助读者理解和上手Podman。
 
-## 1. 安装Docker命令行
+## 2.1 Docker容器引擎
+
+### 2.1.1 容器引擎安装
 
 当前Docker社区版本每个季度都会发布一个重要版本，工具的命令参数随着时间的推移常常让读者都搞不清楚到底有多少命令需要熟悉。所以，Docker推出了适合开发者使用的桌面版本安装包，支持MacOS和Windows两大主流操作系统平台，让用户可以随时接触Docker命令行工具的变化，从而达到教育用户的目的。
 
@@ -42,7 +48,7 @@ $ sudo docker run hello-world
 由于Docker社区版本引擎更新频繁，Docker官方的安装文档是最佳的参考书，可以在第一时间查阅对应平台系统的安装步骤。例如[https://docs.docker.com/install/linux/docker-ce/ubuntu/](https://docs.docker.com/install/linux/docker-ce/ubuntu/#upgrade-docker-ce) 就是Ubuntu安装手册的地址。
 {% endhint %}
 
-## 2  解析Docker命令行
+### 2.1.2  客户端参数
 
 近些年容器技术变化巨大，熟悉Docker命令行工具的参数可以快速加深对容器技术的理解，所以先让我们一起开始一次真正的命令行学习之旅。首先，Docker的命令清单可以通过运行 **docker** ，或者 **docker help** 命令得到：
 
@@ -169,7 +175,7 @@ Run 'docker COMMAND --help' for more information on a command.
       <td style="text-align:left">1. login/ logout 2. pull / push 3. search</td>
     </tr>
   </tbody>
-</table>### **2.1 参数约定**
+</table>#### **2.1.2.1 参数约定**
 
 单个字符的参数可以放在一起组合配置，例如
 
@@ -183,15 +189,15 @@ docker run -t -i --name test busybox sh
 docker run -ti --name test busybox sh
 ```
 
-### **2.2 布尔值约定**
+#### **2.1.2.2 布尔值约定**
 
 Boolean参数形式如： -d=false。注意，当你声明这个Boolean参数时，比如 docker run -d=true，它将直接把启动的Container挂起放在后台运行。
 
-### **2.3 字符串和数字**
+#### **2.1.2.3 字符串和数字**
 
 参数如 --name=“” 定义一个字符串，它仅能被定义一次。同类型的如-c=0 定义一个数字，它也只能被定义一次。
 
-### **2.4 后台进程**
+### **2.1.3 服务端参数**
 
 Docker后台进程是一个常驻后台的系统进程，目前已经从docker程序分离处理一份独立的程序dockerd来执行守护后台进程。这个后台进程是用来启动容器引擎的，使用dockerd --help可以得到更详细的功能参数配置, 如下所示：
 
@@ -348,9 +354,9 @@ Docker后台进程参数清单如下表：
 | --userns-remap string | 用户命令空间的用户、用户组配置 |
 | -v, --version | 版本 |
 
-## 3. 探秘Docker命令行
+## 2.2 Docker命令实践
 
-### **3.1 环境信息相关**
+### **2.2.1 环境信息相关**
 
 **info**
 
@@ -394,7 +400,7 @@ Sockets: [fd://]
 
 显示Docker的版本号，API版本号，Git commit， Docker客户端和后台进程的Go版本号。
 
-### **3.2 系统运维相关**
+### **2.2.2 系统运维相关**
 
 **attach**
 
@@ -807,7 +813,7 @@ docker create [OPTIONS] IMAGE [COMMAND] [ARG...]
 
 这是一个重要的命令，可以创建容器但并不执行它。
 
-### **3.3 日志信息相关**
+### **2.2.3 日志信息相关**
 
 **events**
 
@@ -905,7 +911,7 @@ docker search TERM
 
 通过关键字搜索分享的Image。
 
-## 4. 更安全的命令行Podman
+## 2.3 Podman容器引擎
 
 为了安全的运行容器，容器社区在红帽的推动下发布了更安全的容器工具集合：Podman、runc、systemd、Buildah、skopeo。Podman的目标就是无缝替换Docker，并且更安全。为了体验容器的安全问题，这里需要先了解下Linux Kernel有一个系统工具audit，可以实时监控系统上的安全事件，并把日志保存在日志audit.log中。例如，为了监测系统文件/etc/shadow是否有修改的情况，可以执行以下命令：
 
@@ -968,9 +974,15 @@ cat /proc/1/loginuid
 4294967295
 ```
 
+## 2.4 CRI-O容器引擎
 
+## 2.5 KataContainer容器引擎
 
-## 5. 总结
+## 2.6 Firecracker容器引擎
+
+## 2.7 gVisor容器引擎
+
+## 2.8 总结
 
 通过以上对Docker命令行的详细解释，读者可以强化对Docker命令的熟悉。尽管本章详细介绍了Docker方方面面的命令行参数，但仍然是重点参数的介绍。考虑到Docker的版本迭代快，很多社区实践很快就进入到新版本的参数列表中，为了确保参数使用正确，请随时参考Docker官方文档获得最全面的解释定义。
 
