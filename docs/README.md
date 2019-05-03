@@ -5,7 +5,7 @@
 * [第1章 容器核心技术概述](../1.-rong-qi-he-xin-ji-shu-yu-lan.md)
 * [第2章  玩转容器引擎](../wan-zhuan-docker-ming-ling-hang.md)
 * [第3章 容器和自动化运维实践](../3.-ji-yu-docker-rong-qi-ji-shu-de-devops-shi-jian.md)
-* [第4章 容器调度集群系统实践](../4.-kubernetes-ji-qun-ping-tai-de-da-jian-shi-jian.md)
+* [第4章 容器编排系统应用实践](../4.-kubernetes-ji-qun-ping-tai-de-da-jian-shi-jian.md)
 * [第5章 容器网络部署实践](../5.-rong-qi-wang-luo-da-jian-shi-jian.md)
 * [第6章 容器日志和监控系统实践](../6.-rong-qi-ri-zhi-he-jian-kong-xi-tong-da-jian-shi-jian.md)
 * [第7章 企业级富容器技术实践](../9.-fu-rong-qi-yin-qing-ji-shu-tan-suo-shi-jian.md)
