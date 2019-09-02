@@ -16,4 +16,5 @@
 * [第12章 容器与机器学习系统实践](../di-11-zhang-rong-qi-he-ji-qi-xue-xi-shi-jian.md)
 * [第13章 容器与服务网格实践](../di-12-zhang-rong-qi-yu-fu-wu-wang-ge-shi-jian.md)
 * [第14章 容器与无服务器函数服务实践](../di-13-zhang-rong-qi-yu-wu-fu-wu-qi-han-shu-fu-wu-shi-jian.md)
+* [第15章 容器与嵌入式系统集成实践](../di-15-zhang-rong-qi-yu-qian-ru-shi-xi-tong-ji-cheng-shi-jian.md)
 
