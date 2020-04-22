@@ -976,6 +976,42 @@ cat /proc/1/loginuid
 
 ## 2.4 CRI-O容器引擎
 
+CRI-O是Kubernetes社区为了摆脱对Docker容器的依赖，基于容器运行时接口（CRI）之上建立的管理容器实例的容器引擎，目前为Kubernetes集群的默认容器引擎。CRI-O容器引擎通过runc维护管理容器的运行时，runc本身也是从Docker剥离出来的开源项目，是当前容器运行时的标准实现。
+
+通过参考CRI-O的运行方式，以下列出其Systemd的服务启动文件：
+
+```bash
+[Unit]
+Description=Open Container Initiative Daemon
+Documentation=https://github.com/cri-o/cri-o
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=notify
+EnvironmentFile=-/etc/sysconfig/crio
+Environment=GOTRACEBACK=crash
+Environment=LD_LIBRARY_PATH=:/opt/lib64
+Environment=PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/opt/bin
+ExecStart=/usr/local/bin/crio \
+          $CRIO_STORAGE_OPTIONS \
+          $CRIO_NETWORK_OPTIONS \
+          $CRIO_METRICS_OPTIONS
+ExecReload=/bin/kill -s HUP $MAINPID
+TasksMax=infinity
+LimitNOFILE=1048576
+LimitNPROC=1048576
+LimitCORE=infinity
+OOMScoreAdjust=-999
+TimeoutStartSec=0
+Restart=on-abnormal
+
+[Install]
+WantedBy=multi-user.target
+```
+
+从配置可以看到，它的功能很少，主要是服务于编排引擎Kubernetes的需要，启动并维护Pod容器组。所以它并不是提供开发者使用的容器引擎，主要服务于业务生产环境的容器组件。
+
 ## 2.5 KataContainer容器引擎
 
 ## 2.6 Firecracker容器引擎
