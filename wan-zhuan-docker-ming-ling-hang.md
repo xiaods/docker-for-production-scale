@@ -1,5 +1,5 @@
 ---
-description: 'Docker, LXD, RKT, PodMan, Cri-O ，总有一款适合你'
+description: 'Docker, LXD, RKT, PodMan, CRI-O ，总有一款适合你'
 ---
 
 # 第2章  玩转容器引擎
